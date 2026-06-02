@@ -1,10 +1,10 @@
-# Codex Workflow System
+# Codex 工作流系统
 
 一套中文 Codex 工作流插件，面向新手和非技术用户。
 
 它把模糊目标引导成可执行任务，并提供项目总控、学习教练、调试修复、漂移审计和阶段收尾能力。
 
-## 包含的 Skills
+## 包含的技能
 
 - `codex-newbie-guide`：新手引导入口
 - `codex-project-master`：项目总控
@@ -19,20 +19,20 @@
 启动新手引导。我有一个模糊目标，请你一步一步问我，并把它变成可执行任务。
 ```
 
-## Install
+## 安装方式
 
-After this repository is public, users can install it with:
+全局安装：
 
 ```bash
 npx codex-marketplace add 1139030773-cmd/codex-workflow-system --plugin --global
 ```
 
-For project-only install:
+只安装到当前项目：
 
 ```bash
 npx codex-marketplace add 1139030773-cmd/codex-workflow-system --plugin --project
 ```
 
-## License
+## 许可证
 
 MIT
