@@ -1,0 +1,20 @@
+{
+  "name": "codex-workflow-system",
+  "interface": {
+    "displayName": "Codex 工作流系统"
+  },
+  "plugins": [
+    {
+      "name": "codex-workflow-system",
+      "source": {
+        "source": "local",
+        "path": "./plugins/codex-workflow-system"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
