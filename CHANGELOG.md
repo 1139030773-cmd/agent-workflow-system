@@ -2,6 +2,17 @@
 
 所有对该项目的重大更改将在此文件中进行记录。
 
+## [1.4.0] - 2026-06-03
+
+### Added
+- 📦 Artifact 交接层 (BEHAVIOR_SPEC.md §13) — 技能间结构化产物传递
+- 📦 5 个 Artifact 模板 — briefing/plan/patch/lesson/audit
+- 📦 每个技能限定输入/输出 Artifact，禁止重复读取项目全貌
+
+### Changed
+- 🔧 全部 7 个技能新增 Artifact 输入/输出约束
+- 🔧 上下文传递从 50k 聊天记录 → 5k 结构化产物
+
 ## [1.3.2] - 2026-06-03
 
 ### Fixed
