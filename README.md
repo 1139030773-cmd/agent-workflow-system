@@ -83,7 +83,7 @@
 ### Codex
 
 ```bash
-codex plugin marketplace add 1139030773-cmd/codex-workflow-system
+codex plugin marketplace add 1139030773-cmd/agent-workflow-system
 ```
 
 然后在 Codex 中输入 `/plugins` 安装 "Codex 工作流系统"。
@@ -93,8 +93,8 @@ codex plugin marketplace add 1139030773-cmd/codex-workflow-system
 将 `.claude/skills/` 目录复制到你的项目根目录下，重启 Claude Code 后即可使用 `/workflow-system` 等命令。
 
 ```bash
-git clone https://github.com/1139030773-cmd/codex-workflow-system.git
-cp -r codex-workflow-system/.claude/skills/ 你的项目/.claude/skills/
+git clone https://github.com/1139030773-cmd/agent-workflow-system.git
+cp -r agent-workflow-system/.claude/skills/ 你的项目/.claude/skills/
 ```
 
 ---
