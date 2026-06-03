@@ -65,4 +65,11 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Skill
 - 不跳过状态机验证
 - 详见 `BEHAVIOR_SPEC.md` 第六章
 
+## 交互预算自检
+
+输出前检查（`BEHAVIOR_SPEC.md` §7.3）：
+- [ ] 本次只给用户 1 个决策点？
+- [ ] 机器侧结果未混入交互输出？
+- [ ] 若需多个确认 → 拆分，逐个询问
+
 现在询问用户：你想做什么？

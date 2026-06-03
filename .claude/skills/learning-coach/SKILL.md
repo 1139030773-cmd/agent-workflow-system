@@ -54,6 +54,7 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch
 - [ ] 教学在范围内？未偏离到项目/功能开发？
 - [ ] 用户能否独立完成？/ 需降难度？/ 需复习？
 - [ ] 若方向跑偏 → 建议 `/drift-auditor`
+- [ ] 交互预算：每次只给 1 个练习或问题？（`BEHAVIOR_SPEC.md` §7.3）
 
 ## 偏离处理（BEHAVIOR_SPEC.md 第四章）
 
