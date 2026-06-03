@@ -99,11 +99,10 @@ codex plugin marketplace add 1139030773-cmd/agent-workflow-system
 
 ### Claude Code
 
-将 `.claude/skills/` 目录复制到你的项目根目录下，重启 Claude Code 后即可使用 `/workflow-system` 等命令。
+在项目根目录运行以下命令，重启 Claude Code 后输入 `/workflow-system` 即可使用：
 
 ```bash
-git clone https://github.com/1139030773-cmd/agent-workflow-system.git
-cp -r agent-workflow-system/.claude/skills/ 你的项目/.claude/skills/
+git clone https://github.com/1139030773-cmd/agent-workflow-system.git && mkdir -p .claude && cp -r agent-workflow-system/.claude/skills/ .claude/skills/ && rm -rf agent-workflow-system
 ```
 
 ---
