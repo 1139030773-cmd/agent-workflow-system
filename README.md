@@ -89,58 +89,32 @@
 
 ## 安装方式
 
-### Codex
+### Codex（新手推荐 — 不用终端）
 
-```bash
-codex plugin marketplace add 1139030773-cmd/agent-workflow-system
+**两步搞定：**
+
+1. 打开 Codex，在聊天框输入：`/plugins`
+2. 搜 `agent-workflow` → 点 **安装**
+
+> 如果搜不到，终端运行一次（之后就不用管了）：
+> ```
+> codex plugin marketplace add 1139030773-cmd/agent-workflow-system
+> ```
+
+### Claude Code（新手推荐 — 一行命令）
+
+**复制 → 粘贴到终端 → 回车：**
+
 ```
-
-然后在 Codex 中输入 `/plugins` 安装 "Codex 工作流系统"。
-
-### Claude Code
-
-在项目根目录运行以下命令，重启 Claude Code 后输入 `/workflow-system` 即可使用：
-
-```bash
 git clone https://github.com/1139030773-cmd/agent-workflow-system.git && mkdir -p .claude && cp -r agent-workflow-system/.claude/skills/ .claude/skills/ && rm -rf agent-workflow-system
 ```
 
----
+重启 Claude Code，输入 `/workflow-system` 就能用了。
 
-## 自动更新
+### 怎么知道有更新？
 
-### Claude Code
-
-启用后每次启动自动检查更新，无需手动 `git pull`：
-
-**1. 配置 SessionStart hook：**
-
-在项目 `.claude/settings.json` 中添加：
-
-```json
-{
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "",
-        "command": "bash ~/.claude/plugins/marketplaces/agent-workflow-system/hooks/session-start.sh"
-      }
-    ]
-  }
-}
-```
-
-**2. 或者全局生效**（所有项目自动更新），在 `~/.claude/settings.json` 中配置同上。
-
-### Codex
-
-Codex 暂不支持插件自动更新通知。推荐安装第三方工具：
-
-```bash
-npm i -g ai-tool-updater
-```
-
-安装后会自动监测 Claude Code、Codex 等 AI 工具的更新并通过系统通知提醒。
+- **Claude Code**：每次启动自动检查（已配 hook），或用 `cd .claude/skills/ && git pull`
+- **Codex**：移除再重新加市场即可更新：`codex plugin marketplace remove agent-workflow-system && codex plugin marketplace add 1139030773-cmd/agent-workflow-system`
 
 ---
 
