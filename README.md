@@ -61,7 +61,19 @@
 | ≥5 级 | 等待人工解锁，停止所有自动动作 |
 
 ### 证据链追踪
-每个动作记录：做了什么、对齐了哪条规范、验证结果、回滚点。阶段收尾时汇总到 `DECISIONS.md`。补充任务完成后自动验证与主任务的兼容性，有序收敛回主任务。
+每个动作记录：做了什么、对齐了哪条规范、验证结果、回滚点。阶段收尾时汇总到 `DECISIONS.md`。
+
+### 提问规范
+所有面向用户的提问必须附带 2-4 个场景相关的备选答案，防止用户不知道如何回答。
+
+### 能力前置检查
+任务派发执行前，先确认用户具备所需工具/技能。不匹配则降级到用户会的方式。
+
+### 扩展审查机制
+所有新增功能必须有真实摩擦作为依据。设门槛：修 bug 1 次、补盲区 3 次、加新机制 5 次、衍生新工具 10 次。每次改进必须回答：能不能删一行旧的？
+
+### 摩擦记录 + 改进闭环
+每次执行摩擦记录到 `USAGE_FEEDBACK.md`，同类累积 ≥3 次触发审计，≥5 次触发人工改进提案。系统从使用中自我进化。
 
 ### 阶段位置指示器
 每次启动技能时显示当前位置：
@@ -95,16 +107,29 @@
 codex plugin marketplace add 1139030773-cmd/agent-workflow-system
 ```
 
-然后在 Codex 中输入 `/plugins` 安装 "Codex 工作流系统"。
+然后在 Codex 中输入 `/plugins` 安装 "Agent Workflow 工作流系统"。
+
+**更新方式：**
+```bash
+codex plugin marketplace remove agent-workflow-system
+codex plugin marketplace add 1139030773-cmd/agent-workflow-system
+```
 
 ### Claude Code
 
-将 `.claude/skills/` 目录复制到你的项目根目录下，重启 Claude Code 后即可使用 `/workflow-system` 等命令。
+将 `.claude/skills/` 目录复制到项目根目录，重启 Claude Code 后即可使用 `/workflow-system` 等命令。
 
 ```bash
 git clone https://github.com/1139030773-cmd/agent-workflow-system.git
 cp -r agent-workflow-system/.claude/skills/ 你的项目/.claude/skills/
 ```
+
+**更新方式（已有安装）：**
+```bash
+cd 你的项目/.claude/skills/ && git pull
+```
+
+或在 `.claude/settings.json` 中配置 SessionStart hook 自动更新。
 
 ---
 
