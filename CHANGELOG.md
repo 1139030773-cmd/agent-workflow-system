@@ -2,6 +2,14 @@
 
 所有对该项目的重大更改将在此文件中进行记录。
 
+## [1.2.0] - 2026-06-03
+
+### Added
+- ⚖️ 法律觉察机制 (BEHAVIOR_SPEC.md §8) — 知识产权/隐私/合规/安全/管辖冲突 5 类触发信号
+- ⚖️ 三层拦截 — workflow-system → project-master → debug-fixer
+- ⚖️ 硬边界：不引法条、不做违法判断、不阻止用户
+- 🔧 Auto-Release CI — 推送 tag 自动创建 GitHub Release
+
 ## [1.1.0] - 2026-06-03
 
 ### Added
