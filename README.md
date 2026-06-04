@@ -1,126 +1,180 @@
-# Agent Workflow 工作流系统
+# Agent Workflow System（智能工作流系统）
 
-一套中文 AI 工作流系统，面向新手和非技术用户。**同时支持 Codex 和 Claude Code 两个平台。**
-
-把模糊目标引导成可执行任务，并提供项目总控、学习教练、调试修复、漂移审计和阶段收尾能力。所有技能以 `agent-` 为前缀，代表可跨平台运行的智能体角色。
+一套中文 AI 工作流系统，覆盖 Claude Code 和 Codex 双平台。通过 **7 个协作技能** + **行为规范宪法** + **会话恢复机制**，将模糊目标转化为可执行任务，在项目全生命周期中提供支持。
 
 ---
 
-## 架构概览
+## ✨ 核心特性
 
-```
-[入口] → [引导] → [策划] → [执行] → [审计] → [收尾]
-  ↑                   ↑        ↑        ↑        ↑
-总调度              策划者   执行者    审计者   收尾者
-(只调度)          (只规划) (只执行) (只诊断) (只冻结)
-```
+### 🔄 会话恢复机制（v1.5.0 新增）
 
-每个技能有明确的角色身份和硬边界权限。策划和执行隔离，审计只读不改，所有动作受统一行为规范约束。
+**窗口关了，任务还在。**
 
----
+- **CLAUDE.md** — 每次新会话启动时自动检测未完成任务
+- **RESUME.md** — 轻量 checkpoint 文件，AI 工作中持续自动保存
+- **四选项恢复 UI** — 继续 / 暂缓 / 放弃 / 新项目，精准区分场景
+- **SessionEnd Hook** — 关窗口时自动写入恢复点（Windows/Linux/Mac）
+- **跨平台支持** — PowerShell + Bash 双实现
 
-## 包含的技能
+### 🧠 7 个协作技能
 
-| 技能 | 角色 | 用途 |
-|------|------|------|
-| `workflow-system` | 总调度 | 入口，自动判断任务类型并路由 |
-| `agent-newbie-guide` | 引导者 | 把模糊想法变成可执行任务，苏格拉底式追问 |
-| `agent-project-master` | 策划者 | 项目规划、任务拆分、决策闸门、并行派发 |
-| `agent-debug-fixer` | 执行者 | 最小修复 + TDD 强制（测试先行），不重构不加功能 |
-| `agent-learning-coach` | 执行者 | 讲-练-批改-复习循环，交互预算控制 |
-| `agent-drift-auditor` | 审计者 | 只读诊断 + 代码审查（规格/重复/命名/安全），五级纠错 |
-| `agent-phase-closeout` | 收尾者 | 冻结状态，汇总证据链 |
+| 技能 | 角色 | 触发场景 |
+|------|------|----------|
+| `workflow-system` | 总调度 | 入口分类，自动路由到合适的子技能 |
+| `newbie-guide` | 引导者 | 模糊目标 → 可执行任务（苏格拉底式追问） |
+| `project-master` | 策划者 | 任务拆分、决策闸门、验收标准定义 |
+| `debug-fixer` | 执行者 | 报错/测试失败/功能异常（TDD 最小修复） |
+| `learning-coach` | 执行者 | 学习编程/英语/设计/AI（讲-练-批改-复习） |
+| `drift-auditor` | 审计者 | 项目跑偏/上下文漂移/任务分叉检测 |
+| `phase-closeout` | 收尾者 | 阶段结束、冻结状态、生成新对话口令 |
 
----
+### 📜 行为规范宪法（BEHAVIOR_SPEC.md）
 
-## 核心机制
+14 章统一行为规范，约束所有技能：
 
-### 统一行为规范
-所有技能遵守同一套宪法：职能隔离、动作前校验、决策闸门、最小动作、回滚就绪。
-
-### 人机分离原则
-系统动作显式区分机器侧和人机接口侧。机器任务（扫描/测试/审计/记录）可并行不限量；交互任务强制串行，每次只给用户 1 个决策点，防止信息过载。
-
-### 交互预算控制
-每个技能输出前自检：本次是否只包含 1 个用户决策点？超过则拆分，逐个确认。
-
-### 法律觉察
-三层拦截机制。当用户请求涉及知识产权/隐私/合规/安全/管辖冲突时，系统自动提示风险，等用户确认后继续。不引用具体法条、不做违法判断、不阻止用户。
-
-### 状态机锁定
-技能之间有合法跳转表，不在路径上的跳转被拒绝或强制走审计中转。
-
-### 五级纠错
-| 级别 | 动作 |
-|------|------|
-| 第 1 级 | 自查纠正，记录证据链 |
-| 第 2 级 | 审计者轻量诊断，输出纠正建议 |
-| 第 3 级 | 深度检查 + 回滚到上一合法状态，暂停前进 |
-| 第 4 级 | 冻结任务队列 + 完整偏离报告，标记人工介入 |
-| 第 5 级 | 强制人工介入，系统锁定 |
-| ≥5 级 | 等待人工解锁，停止所有自动动作 |
-
-### 证据链追踪
-每个动作记录：做了什么、对齐了哪条规范、验证结果、回滚点。阶段收尾时汇总到 `DECISIONS.md`。
-
-### Artifact 交接层
-技能之间不传递完整聊天记录。每个技能产出结构化产物（briefing → plan → patch → audit），下一个技能只读产物 + 指定文件。50k 上下文压缩为 5k 产物，不重复读取。
-
-### 阶段位置指示器
-每次启动技能时显示当前位置：
-```
-[●入口] → [●引导] → [◉策划] → [○执行] → [○审计] → [○收尾]
- 当前角色: 策划者 | 上一站: 引导 | 下一站: 执行
-```
-
-### 共享真相源
-四个文件贯穿所有技能：
-- `PROJECT.md` — 项目目标、阶段、冻结区域
-- `TASK_QUEUE.md` — 任务队列（只允许一个进行中）
-- `DECISIONS.md` — 所有长期决策 + 证据链汇总
-- `STATE_SNAPSHOT.md` — 当前状态快照 + 阶段位置
+- **职能隔离** — 策划者不写代码，执行者不做架构决策
+- **五级纠错** — 从自查到强制人工介入的逐级升级
+- **法律觉察** — 三层法律风险提示，不越界判断
+- **Artifact 交接层** — 50k 上下文 → 5k Artifact，轻量技能间传递
+- **会话恢复** — 跨会话任务连续性（第 14 章）
 
 ---
 
-## 推荐启动语
+## 🚀 快速开始
 
-```text
-启动新手引导。我有一个模糊目标，请你一步一步问我，并把它变成可执行任务。
+### Claude Code
+
+```bash
+# 1. 克隆仓库
+git clone https://github.com/1139030773-cmd/agent-workflow-system.git
+cd agent-workflow-system
+
+# 2. 复制技能到项目
+cp -r .claude/skills/* /你的项目/.claude/skills/
+cp CLAUDE.md /你的项目/
+cp RESUME.md /你的项目/
+
+# 3. 配置 hooks（推荐，启用会话恢复和自动更新）
+mkdir -p /你的项目/.claude/hooks/
+cp .claude/hooks/session-end.sh /你的项目/.claude/hooks/
+cp .claude/hooks/session-start.sh /你的项目/.claude/hooks/
+```
+
+### Codex
+
+在 Codex 聊天中输入：
+```
+/plugins add 1139030773-cmd/agent-workflow-system
+```
+
+或通过 CLI：
+```bash
+codex plugin marketplace add 1139030773-cmd/agent-workflow-system
+codex plugin add agent-workflow-system@agent-workflow-system
 ```
 
 ---
 
-## 安装方式
-
-### Codex（新手推荐 — 不用终端）
-
-**两步搞定：**
-
-1. 打开 Codex，在聊天框输入：`/plugins`
-2. 搜 `agent-workflow` → 点 **安装**
-
-> 如果搜不到，终端运行一次（之后就不用管了）：
-> ```
-> codex plugin marketplace add 1139030773-cmd/agent-workflow-system
-> ```
-
-### Claude Code（新手推荐 — 一行命令）
-
-**复制 → 粘贴到终端 → 回车：**
+## 🏗️ 项目结构
 
 ```
-git clone https://github.com/1139030773-cmd/agent-workflow-system.git && mkdir -p .claude && cp -r agent-workflow-system/.claude/skills/ .claude/skills/ && rm -rf agent-workflow-system
+.
+├── CLAUDE.md                  # 会话启动自检 + 恢复检查
+├── RESUME.md                  # 任务恢复点（自动 checkpoint）
+├── README.md                  # 本文件
+├── RELEASE_CHECKLIST.md       # 发布检查清单
+├── PROJECT.md                 # 项目目标与范围
+├── TASK_QUEUE.md              # 任务队列
+├── DECISIONS.md               # 架构决策记录
+├── STATE_SNAPSHOT.md          # 状态快照
+├── .claude/
+│   ├── skills/                # 7 个技能 + references
+│   ├── hooks/                 # SessionEnd/SessionStart 脚本
+│   └── settings.local.json    # Hook 配置
+├── memory/                    # 持久化任务追踪
+├── skills/agent-*/            # Codex 版技能
+└── plugins/                   # 插件包
 ```
-
-重启 Claude Code，输入 `/workflow-system` 就能用了。
-
-### 怎么知道有更新？
-
-- **Claude Code**：每次启动自动检查（已配 hook），或用 `cd .claude/skills/ && git pull`
-- **Codex**：移除再重新加市场即可更新：`codex plugin marketplace remove agent-workflow-system && codex plugin marketplace add 1139030773-cmd/agent-workflow-system`
 
 ---
 
-## 许可证
+## 🔧 配置
 
-MIT
+### 启用会话恢复（推荐）
+
+将以下文件复制到你的项目中：
+- `CLAUDE.md` — AI 在每个新会话中自动读取
+- `RESUME.md` — AI 在工作过程中自动更新
+- `.claude/hooks/session-end.ps1` — Windows 关窗口自动保存
+- `.claude/hooks/session-end.sh` — Linux/Mac 关窗口自动保存
+
+### 启用自动更新（推荐）
+
+```json
+// .claude/settings.local.json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/session-start.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+---
+
+## 📋 使用流程
+
+```
+开窗口 → AI 自动检测 RESUME.md
+    │
+    ├── 有未完成任务 → ⚠️ 四选项 UI
+    │    A. 继续 → 从上次中断处接着做
+    │    B. 暂缓 → 保留进度，先做别的
+    │    C. 放弃 → 删除恢复点
+    │    D. 新项目 → 归档旧任务
+    │
+    └── 无活跃任务 → 正常开始
+         │
+         说 "我想做..." → workflow-system 自动分类
+         → 引导 → 策划 → 执行 → 审计 → 收尾
+              │
+              └── 每步自动更新 RESUME.md
+```
+
+---
+
+## 📖 版本历史
+
+| 版本 | 日期 | 主要变更 |
+|------|------|----------|
+| **1.5.0** | 2026-06-05 | 🔄 会话恢复机制、跨平台 hooks、README |
+| 1.4.1 | 2026-06-04 | 发布管线 + 社区市场同步 |
+| 1.4.0 | 2026-06-03 | Artifact 交接层 + 交互预算 |
+
+详见 [CHANGELOG.md](https://github.com/1139030773-cmd/agent-workflow-system/blob/main/CHANGELOG.md)
+
+---
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 PR。详见 [CONTRIBUTING.md](https://github.com/1139030773-cmd/agent-workflow-system/blob/main/CONTRIBUTING.md)
+
+## 📄 许可
+
+MIT License
+
+## 🔗 链接
+
+- GitHub: [1139030773-cmd/agent-workflow-system](https://github.com/1139030773-cmd/agent-workflow-system)
+- Codex 市场: `/plugins add 1139030773-cmd/agent-workflow-system`
+- 社区市场: [awesome-codex-plugins](https://github.com/hashgraph-online/awesome-codex-plugins)

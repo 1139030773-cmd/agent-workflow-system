@@ -32,6 +32,7 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch
 1. 读取 `BEHAVIOR_SPEC.md` 第一章：确认执行者边界
 2. 读取 `STATE_MACHINE.md`：确认当前状态合法
 3. 偏离计数器清零
+4. **恢复感知**（若为恢复会话）：确认 RESUME.md 中 phase 字段匹配当前技能，不匹配时报告 workflow-system
 
 ## 硬边界（执行者 == 教学，不跑偏）
 

@@ -33,6 +33,7 @@ allowed-tools: Bash, Read, Edit, Glob, Grep
 2. 读取 `STATE_MACHINE.md`：确认当前状态合法
 3. 读取 `TASK_QUEUE.md`、`STATE_SNAPSHOT.md`
 4. 偏离计数器清零
+5. **恢复感知**（若为恢复会话）：确认 RESUME.md 中 phase 字段匹配当前技能，不匹配时报告 workflow-system
 
 ## 硬边界（执行者 == 修问题，不扩张）
 

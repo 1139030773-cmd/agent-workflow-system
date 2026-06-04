@@ -40,7 +40,13 @@ git tag -a "$TAG" -m "$TAG — $DESC"
 git push origin "$TAG"
 
 echo "=== 5. Codex 市场刷新 ==="
-CODEX_CLI=$(find "$HOME/.codex/.sandbox-bin" -name "codex-command-runner-*.exe" | sort -V | tail -1)
+CODEX_CLI=""
+if [ -d "$HOME/.codex/.sandbox-bin" ]; then
+  CODEX_CLI=$(find "$HOME/.codex/.sandbox-bin" -name "codex-command-runner-*" \( -name "*.exe" -o -type f -executable \) 2>/dev/null | sort -V | tail -1)
+fi
+if [ -z "$CODEX_CLI" ]; then
+  CODEX_CLI=$(command -v codex 2>/dev/null || true)
+fi
 if [ -n "$CODEX_CLI" ]; then
   GIT_SSL_BACKEND=openssl "$CODEX_CLI" plugin marketplace remove agent-workflow-system 2>/dev/null || true
   GIT_SSL_BACKEND=openssl "$CODEX_CLI" plugin marketplace add "$GITHUB_REPO"

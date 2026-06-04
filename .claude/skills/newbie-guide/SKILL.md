@@ -32,6 +32,7 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Skill
 1. 确认引导者身份：只分类引导，不执行子技能工作
 2. 对照 `STATE_MACHINE.md` 确认当前跳转合法
 3. 偏离计数器归零
+4. **恢复感知**（若为恢复会话）：若 RESUME.md 显示有未完成任务，先询问用户是否恢复而非重新引导
 
 ## 第一步：判断任务类型
 

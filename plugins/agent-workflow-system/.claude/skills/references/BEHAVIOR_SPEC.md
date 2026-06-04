@@ -12,7 +12,7 @@
 | **执行者**（debug-fixer, learning-coach） | 在其技能范围内执行具体动作 | 做架构决策、改变项目方向、静默扩展范围 |
 | **审计者**（drift-auditor） | 只读、诊断、输出偏离报告 | 修改任何代码或真相源文件、直接修复问题 |
 | **引导者**（newbie-guide, workflow-system） | 分类、引导、激活子技能 | 直接执行子技能范围内的工作 |
-| **收尾者**（phase-closeout） | 总结、冻结、更新状态快照 | 开发新功能、引入新方案 |
+| **收尾者**（phase-closeout） | 总结、冻结、更新状态快照、管理会话恢复点（RESUME.md） | 开发新功能、引入新方案 |
 
 **硬隔离规则**：同一轮对话中，策划者不得同时扮演执行者。必须完成策划并确认后，方可切换角色。
 
@@ -375,3 +375,72 @@ Artifact 的目标是**去重**，不是**去信息**。以下规则不可违反
    - 验收标准
    - 已知风险
    - 上游已做出的决策
+
+---
+
+## 第十四章：会话恢复机制
+
+### 14.1 核心原则
+
+系统支持跨会话任务连续性。通过自动检查点（checkpoint）和会话启动自检，实现"窗口关了，任务还在"。
+
+### 14.2 机制组成
+
+| 组件 | 位置 | 职责 |
+|------|------|------|
+| CLAUDE.md | 项目根 | 会话启动自检，检测 RESUME.md 状态，展示四选项恢复 UI |
+| RESUME.md | 项目根 | 轻量 checkpoint 文件，记录任务名称、阶段、进度、下一步 |
+| SessionEnd hook | .claude/hooks/ | 窗口关闭时自动更新 RESUME.md 时间戳 |
+| SessionStart hook | .claude/hooks/ | 会话启动时自动 git pull 更新技能 |
+| memory/ 目录 | ./memory/ | 持久化任务跟踪（session-recovery.md / active-task.md / MEMORY.md） |
+
+### 14.3 四选项恢复 UI
+
+会话启动时，CLAUDE.md 检测到 `status: active` 时展示：
+
+```
+⚠️ 检测到上次未完成的任务
+
+| 项目 | 内容 |
+|------|------|
+| 任务名称 | {from RESUME.md} |
+| 当前阶段 | {from RESUME.md} |
+| 已完成 | {from RESUME.md} |
+| 下一步 | {from RESUME.md} |
+
+A. 继续 — 载入任务状态，接着上次的进度做
+B. 暂缓 — 保留任务进度，本窗口先做别的事
+C. 放弃 — 删除此任务的恢复点
+D. 新项目 — 归档旧任务，开始全新项目
+```
+
+### 14.4 自动 Checkpoint 规则
+
+**收尾者（phase-closeout）** 在阶段结束时：
+1. 将 RESUME.md 的 `status` 设置为 `inactive`（阶段结束，下次无需恢复）
+2. 更新 `completed` 完成项列表
+3. 归档未完成任务到 `memory/active-task.md`
+
+**执行者（debug-fixer, learning-coach）** 在以下时机自动更新 RESUME.md：
+1. 每个重要步骤完成后
+2. 阶段发生变化时
+3. 遇到阻塞时
+
+**所有技能** 在收到用户的暂停/继续/放弃指令时更新 RESUME.md 的 `status` 字段。
+
+### 14.5 跨平台 Hook 配置
+
+| 平台 | Hook 脚本 | 配置事件 |
+|------|-----------|----------|
+| Windows | `.claude/hooks/session-end.ps1` | SessionEnd |
+| Linux / Mac | `.claude/hooks/session-end.sh` | SessionEnd |
+| Linux / Mac | `.claude/hooks/session-start.sh` | SessionStart |
+
+> 双平台 hook 并存于 `settings.local.json` 中，各自在不适用平台上静默失败。
+
+### 14.6 与现有机制的关系
+
+- **RESUME.md** 是 STATE_SNAPSHOT.md 的补充，不是替代：SNAPSHOT 记录完整项目状态，RESUME 仅记录"如何继续"的最小信息。
+- **恢复流程** 不经过 workflow-system 的完整分类，而是从 RESUME.md 直接跳转到记录中的技能。
+- **证据链** 在恢复时追加恢复记录（见 EVIDENCE_CHAIN.md "会话恢复记录"）。
+- **跨会话恢复** 遵守 STATE_MACHINE.md 的恢复路由规则。

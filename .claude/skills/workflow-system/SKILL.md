@@ -32,6 +32,7 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Skill
 1. 读取 `references/BEHAVIOR_SPEC.md` 确认行为边界
 2. 读取 `references/STATE_MACHINE.md` 确认合法跳转
 3. 确认引导者身份：只分类，不执行子技能动作
+4. **恢复上下文检查**：若 CLAUDE.md 标识为恢复会话，确认 RESUME.md 已加载
 
 ## 子技能清单（含角色）
 
@@ -55,6 +56,7 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Skill
 
 ## 快速分类（带状态机校验）
 
+- "恢复 / 继续上次任务 / 接着做" → 检查 RESUME.md → 若有 active 任务 → 恢复路由（跳转到 phase 字段对应的技能）
 - "我想做……但不知道怎么做" → 检查状态机 → `/newbie-guide`
 - "帮我管理 / 规划 / 拆分" → 检查状态机 → `/project-master`
 - "教我 / 我想学 / 带我练" → 检查状态机 → `/learning-coach`

@@ -58,4 +58,21 @@
   回滚点: PROJECT.md @ 阶段2决策前
   回滚点: src/auth.ts @ commit abc1234
   回滚点: STATE_SNAPSHOT.md @ 2026-06-02 17:00
+  回滚点: RESUME.md @ active → 跨会话恢复入口
+  回滚点: RESUME.md @ phase: 执行中 → 直接回到执行中阶段
+```
+
+## 会话恢复记录
+
+跨会话恢复时，追加恢复记录到 `memory/session-recovery.md`：
+
+```markdown
+[恢复记录 #N]
+- 时间: <timestamp>
+- 来源会话: <原会话时间或 ID>
+- 恢复阶段: <RESUME.md phase 字段>
+- 已完成项: <从 RESUME.md completed 读取>
+- 下一步: <从 RESUME.md next_step 读取>
+- 用户选择: 继续 / 暂缓 / 放弃 / 新项目
+- 签名: system-recovery-{序号}
 ```

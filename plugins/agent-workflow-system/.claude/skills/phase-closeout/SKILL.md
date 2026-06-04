@@ -32,7 +32,8 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 1. 读取 `BEHAVIOR_SPEC.md` 第一章：确认收尾者边界
 2. 读取 `STATE_MACHINE.md`：确认当前状态
 3. 读取所有真相源文件
-4. **先执行一次轻量漂移审计**（有偏离先修再收尾）
+4. 读取 `CLAUDE.md` 和 `RESUME.md`：确认恢复系统状态
+5. **先执行一次轻量漂移审计**（有偏离先修再收尾）
 
 ## 硬边界（收尾者 == 冻结，不创新）
 
@@ -75,11 +76,14 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 - `TASK_QUEUE.md`：移动已完成 → 设新任务
 - `DECISIONS.md`：汇总证据链 + 新决策
 - `PROJECT.md`：更新目标、阶段、冻结区域
+- `RESUME.md`：设置 status: inactive（阶段结束，无需恢复），更新 completed 列表
 
 ### 8. 生成新对话口令
 
 ```text
 这是新对话。请先读取：
+- CLAUDE.md（会话启动指令 + 恢复检查）
+- RESUME.md（任务恢复点 / 自动 checkpoint）
 - PROJECT.md（目标/阶段/冻结）
 - DECISIONS.md（所有历史决策 + 证据链汇总）
 - TASK_QUEUE.md（任务队列）

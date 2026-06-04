@@ -33,6 +33,7 @@ allowed-tools: Bash, Read, Glob, Grep
 2. 读取 `STATE_MACHINE.md`：确认被审计技能状态
 3. 读取所有真相源文件
 4. **绝对禁止修改代码或文件**
+5. **恢复感知**（若为恢复会话）：确认 RESUME.md 中 phase 字段匹配当前审计范围
 
 ## 硬边界（审计者 == 只诊断，不动手）
 

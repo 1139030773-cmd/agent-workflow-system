@@ -2,6 +2,27 @@
 
 所有对该项目的重大更改将在此文件中进行记录。
 
+## [1.5.0] - 2026-06-05
+
+### Added
+- 🔄 会话恢复机制 — 自动检测未完成任务 (CLAUDE.md + RESUME.md)
+- 🔄 四选项恢复 UI — 继续 / 暂缓 / 放弃 / 新项目
+- 🔄 SessionEnd Hook — 关窗口自动 checkpoint（Windows: .ps1, Linux/Mac: .sh）
+- 🔄 SessionStart Hook — 自动 git pull 更新（Linux/Mac: .sh）
+- 🔄 恢复状态节点 — STATE_MACHINE.md 新增 [恢复] 状态和跳转规则
+- 🔄 恢复感知 — 全部 7 个技能增加会话恢复自检步骤
+- 🔄 BEHAVIOR_SPEC.md §14 — 新增"会话恢复机制"章节
+- 🔄 EVIDENCE_CHAIN.md — 增加 RESUME.md 回滚目标和恢复记录格式
+- 🔧 跨平台钩子系统 — bash 和 PowerShell 双实现
+- 🔧 release.sh — Codex CLI 路径跨平台检测
+- 📖 README.md — 项目根综合系统文档
+- 📖 memory/ 目录 — session-recovery / active-task / MEMORY 持久化追踪
+
+### Changed
+- 🔧 phase-closeout — 新对话口令包含 CLAUDE.md + RESUME.md
+- 🔧 workflow-system — 新增"恢复/继续上次任务"路由规则
+- 🔧 settings.local.json — 双平台 SessionEnd + SessionStart hooks
+
 ## [1.4.0] - 2026-06-03
 
 ### Added
