@@ -75,8 +75,10 @@ Claude 会自动配置技能、hooks、恢复机制。**不用手动操作文件
 在聊天里输入：
 
 ```
-/plugins add 1139030773-cmd/agent-workflow-system
+帮我安装 agent-workflow-system 插件，GitHub 地址是 1139030773-cmd/agent-workflow-system
 ```
+
+Codex 会自动识别仓库、安装插件。
 
 ---
 
