@@ -44,33 +44,20 @@
 
 ### Claude Code
 
-```bash
-# 1. 克隆仓库
-git clone https://github.com/1139030773-cmd/agent-workflow-system.git
-cd agent-workflow-system
+在聊天里说一句：
 
-# 2. 复制技能到项目
-cp -r .claude/skills/* /你的项目/.claude/skills/
-cp CLAUDE.md /你的项目/
-cp RESUME.md /你的项目/
-
-# 3. 配置 hooks（推荐，启用会话恢复和自动更新）
-mkdir -p /你的项目/.claude/hooks/
-cp .claude/hooks/session-end.sh /你的项目/.claude/hooks/
-cp .claude/hooks/session-start.sh /你的项目/.claude/hooks/
 ```
+帮我安装 agent-workflow-system
+```
+
+Claude 会自动配置技能、hooks、恢复机制。**不用手动操作文件。**
 
 ### Codex
 
-在 Codex 聊天中输入：
+在聊天里输入：
+
 ```
 /plugins add 1139030773-cmd/agent-workflow-system
-```
-
-或通过 CLI：
-```bash
-codex plugin marketplace add 1139030773-cmd/agent-workflow-system
-codex plugin add agent-workflow-system@agent-workflow-system
 ```
 
 ---
