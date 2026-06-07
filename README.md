@@ -58,21 +58,33 @@
 
 ### Claude Code
 
-在聊天里说一句：
+**方式一（推荐）：对话安装**
 
+在聊天里说：
 ```
 帮我安装 agent-workflow-system
 ```
+Claude 会读取仓库并自动配置所有文件。
 
-Claude 会自动配置技能、hooks、恢复机制。**不用手动操作文件。**
+**方式二：手动安装**
+
+```bash
+git clone https://github.com/1139030773-cmd/agent-workflow-system.git
+cp -r agent-workflow-system/.claude ./  && cp agent-workflow-system/CLAUDE.md . && cp agent-workflow-system/RESUME.md .
+```
 
 ### Codex
 
-在聊天里输入：
+**加入市场源（一次）：**
 
+在终端执行：
+```bash
+codex plugin marketplace add https://github.com/hashgraph-online/awesome-codex-plugins.git
 ```
-/plugins add 1139030773-cmd/agent-workflow-system
-```
+
+然后在 Codex 聊天里输入 `/plugins`，在列表中找到 **Agent Workflow System** 安装。
+
+> 💡 插件即将通过 [awesome-codex-plugins](https://github.com/hashgraph-online/awesome-codex-plugins) 市场分发（[PR #184](https://github.com/hashgraph-online/awesome-codex-plugins/pull/184) 审核中）。
 
 ---
 
