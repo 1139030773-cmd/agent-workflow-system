@@ -1,0 +1,31 @@
+name: Plugin Scanner
+
+on:
+  push:
+    paths:
+      - 'plugins/**'
+  pull_request:
+    paths:
+      - 'plugins/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan Plugin
+        uses: hashgraph-online/ai-plugin-scanner-action@v1
+        with:
+          plugin_dir: "./plugins/agent-workflow-system"
+          min_score: 80
+          fail_on_severity: high
+          upload_sarif: true
+          write_step_summary: true
+          pr_comment: auto
