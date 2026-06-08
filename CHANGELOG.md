@@ -17,17 +17,16 @@
 - 🔧 根目录 CLAUDE.md 精简为仅含开发规则
 - 🔧 插件新增独立 CLAUDE.md，装插件后自动对用户生效
 
-## [1.6.0] - 2026-06-05
+## [1.6.3] - 2026-06-07
 
 ### Added
-- 🧠 **context_snapshot** — RESUME.md 新增强制上下文快照字段（decisions/eliminated/user_style/landmarks/footguns）
-- 🧠 新窗口恢复时 AI 必须先读取 context_snapshot 再开口，禁止重复问已决定的事
-- 🔒 **单线程原则** — CLAUDE.md 新增硬约束：用户面前永远只推进一步，系统维护静默后台做
-- 🔒 phase-closeout 收尾模板强制填写 context_snapshot
+- 🔒 **任务收尾铁律** — 即使用户说效果不好，AI 也不能替用户判任务结束
 
-### Changed
-- 🔧 CLAUDE.md 恢复流程新增 5 条恢复戒律
-- 🔧 session-recovery.md memory 文件新增 context_snapshot 读取规则
+## [1.6.2] - 2026-06-05
+
+### Added
+- 🔍 **实操验证优先** — CLAUDE.md 硬约束：验证必须直接执行实操（跑命令/调接口），禁止纯搜索文档推测
+- 🗣️ **回复语气规范** — CLAUDE.md 硬约束：禁止简短否定甩结论、反问句、居高临下语气
 
 ## [1.6.1] - 2026-06-05
 
@@ -47,11 +46,17 @@
 - 🐛 修复新窗口 AI 丢失用户偏好上下文（context_snapshot 填此缺口）
 - 🐛 修复 AI 在多线程中同时扮演收尾者+执行者（单线程原则拦此行为）
 
-## [1.6.2] - 2026-06-05
+## [1.6.0] - 2026-06-05
 
 ### Added
-- 🔍 **实操验证优先** — CLAUDE.md 硬约束：验证必须直接执行实操（跑命令/调接口），禁止纯搜索文档推测
-- 🗣️ **回复语气规范** — CLAUDE.md 硬约束：禁止简短否定甩结论、反问句、居高临下语气
+- 🧠 **context_snapshot** — RESUME.md 新增强制上下文快照字段（decisions/eliminated/user_style/landmarks/footguns）
+- 🧠 新窗口恢复时 AI 必须先读取 context_snapshot 再开口，禁止重复问已决定的事
+- 🔒 **单线程原则** — CLAUDE.md 新增硬约束：用户面前永远只推进一步，系统维护静默后台做
+- 🔒 phase-closeout 收尾模板强制填写 context_snapshot
+
+### Changed
+- 🔧 CLAUDE.md 恢复流程新增 5 条恢复戒律
+- 🔧 session-recovery.md memory 文件新增 context_snapshot 读取规则
 
 ## [1.5.1] - 2026-06-05
 

@@ -11,16 +11,21 @@
 
 ## 系统改动铁律
 
-**只要改了系统文件，以下 6 步必须一口气做完，不等用户催：**
+**只要改了系统文件，以下 7 步必须一口气做完，不等用户催：**
 
 | # | 步骤 | 说明 |
 |---|------|------|
-| 1 | **三目录同步** | 根目录 → `plugins/agent-workflow-system/` → `c:\Users\11390\Documents\New project\` |
-| 2 | **CHANGELOG** | 在对应版本条目下记录改动（Added/Changed/Fixed） |
+| 1 | **三目录同步** | ① 根目录 `c:\Users\11390\Documents\New project\`（CHANGELOG/README/CLAUDE.md）② `plugins/agent-workflow-system/`（插件 CLAUDE.md 规则）③ `plugins/plugins/agent-workflow-system/`（plugin.json/skills） |
+| 2 | **CHANGELOG** | 在对应版本条目下记录改动（Added/Changed/Fixed），**版本号必须与步骤 5 的 plugin.json 一致** |
 | 3 | **README** | 如果改动影响功能描述，同步更新核心特性/版本表 |
-| 4 | **版本号** | 如果是新功能/breaking change，同步更新 `plugin.json` + `marketplace.json` 版本 |
-| 5 | **commit + push + tag** | 提交推送；新功能/breaking change 需打版本 tag |
-| 6 | **验证** | 推送后检查 Releases 页面，确认新版本在列表中且为 Latest。没确认 = 没完成 |
+| 4 | **RESUME.md** | 如果改动涉及任务状态变更，同步更新 checkpoint（last_updated / completed / next_step / phase） |
+| 5 | **版本号** | 如果是新功能/breaking change，同步更新 `plugin.json` + `marketplace.json` 版本，**版本号必须与步骤 2 的 CHANGELOG 一致** |
+| 6 | **commit + push** | 在 `plugins/` 仓库提交推送；新功能/breaking change 需打版本 tag |
+| 7 | **版本一致性验证** | 运行 `.\validate-version.ps1`，通过（显示 ✅）才算完成。不通过 → 回去补步骤 2 或 5，不准跳过 |
+
+> **步骤 2 和 5 互相交叉引用**：改 CHANGELOG 时想着 plugin.json，改 plugin.json 时想着 CHANGELOG。两个版本号互为锚点，忘了一个会自相矛盾。
+
+> **步骤 7 是硬卡点**：不读文件、不跑 `git tag` 确认 = 没改完。AI 不能凭"我记得改过了"跳过这步。
 
 **违反信号**: 用户问"README 更新了吗"、"CHANGELOG 补了吗"、"推送了吗"、"Release 呢" = 你漏步骤了。
 
