@@ -302,7 +302,7 @@ D. 不太确定 — 你推荐一个最简单的
 
 ### 12.2 写入位置
 
-`references/USAGE_FEEDBACK.md`。每个技能结束时追加。
+`skills/references/USAGE_FEEDBACK.md`。每个技能结束时追加。
 
 ### 12.3 改进阈值
 
