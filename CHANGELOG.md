@@ -2,6 +2,17 @@
 
 所有对该项目的重大更改将在此文件中进行记录。
 
+## [1.7.6] - 2026-06-10
+
+### Added
+- 🌐 **英文适配** — README 双语（英文主 + 中文 README_CN）、plugin.json/marketplace.json 双语描述、newbie-guide 追问表中英双语
+- 🌐 **语言自适应规则** — 所有 CLAUDE.md + newbie-guide 加语言检测规则：用户用什么语言提问，AI 用什么语言回应
+- 📝 **推荐启动语** — README 新增 6 个场景的推荐启动语（中英双语）
+- 📦 **Codex 安装方式改版** — 直接安装优先（CLI + URL），市场安装作备选
+
+### Changed
+- 🔧 **validate-version.ps1 增强** — 检查点从 4 个扩展到 8 个，新增 agent-workflow-system plugin.json 检查，防止版本号漏同步
+
 ## [1.7.5] - 2026-06-09
 
 ### Added
