@@ -129,6 +129,7 @@ After installation, try one of these:
 
 | Version | Date | Highlights |
 |---------|------|-----------|
+| **1.7.6** | 2026-06-10 | English adaptation — bilingual README + language auto-detect + starter prompts |
 | **1.7.5** | 2026-06-09 | Skill exit protocol + Return-to-task format rule |
 | **1.7.4** | 2026-06-09 | Mandatory format for drift → task return |
 | **1.7.3** | 2026-06-09 | Sub-task anchoring: parent context = practice material |
