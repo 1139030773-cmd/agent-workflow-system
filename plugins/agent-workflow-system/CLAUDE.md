@@ -10,6 +10,23 @@
 | 沉默等待（用户没说话） | 跳过，等用户先开口 |
 | 明确新任务（"帮我..." / "写一个..."） | 跳过，直接干活 |
 
+## 版本更新检查
+
+**每次会话启动时，静默检查远程 plugin.json 版本号。如果高于本地，在第一轮回复末尾提醒用户，不影响正常流程。**
+
+检查方式：
+```
+读取本地 plugin.json 的 version 字段
+对比远程 https://raw.githubusercontent.com/1139030773-cmd/agent-workflow-system/main/plugins/agent-workflow-system/.codex-plugin/plugin.json
+```
+
+提醒格式（放在回复最后，一句话）：
+```
+💡 发现新版本 v1.x.x（当前 v1.x.x），说"升级"我帮你更新。
+```
+
+关键规则：只提一次、不打断流程、版本一致时完全沉默。
+
 ### 恢复提示格式
 
 **场景一：无子任务**
