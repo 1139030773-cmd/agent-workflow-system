@@ -53,8 +53,9 @@ You change system → Close window → Hook auto commit + push
 - **Session recovery** — Cross-session task continuity
 - **Task forking & convergence** — Sub-tasks anchored to parent task context, auto-return on completion
 - **Four-question self-check** — Before every change: logical? conflicts? important? right timing?
+- **Time-scale awareness** — Tasks track created/last-active timestamps; stale decisions flagged for re-confirmation
 
-**CLAUDE.md Rules (v1.6.2 ~ v1.7.5):**
+**CLAUDE.md Rules (v1.6.2 ~ v1.7.7):**
 - **Verify by doing** — Run commands, don't guess from docs
 - **Tone standards** — Patient, equal, explain everything; no dismissive one-liners
 - **Task closeout rule** — Never close a task without user confirmation
@@ -63,6 +64,7 @@ You change system → Close window → Hook auto commit + push
 - **Task registration rule** — Every new task must be registered in task_stack before starting
 - **Task fork & converge** — Sub-tasks inherit parent context; auto-return on completion
 - **Return-to-task format** — After drift, resume with: goal / progress / next step
+- **Time-scale awareness** — Real-world timestamps on tasks & decisions; auto-flag stale items after idle periods
 
 ---
 
@@ -129,6 +131,7 @@ After installation, try one of these:
 
 | Version | Date | Highlights |
 |---------|------|-----------|
+| **1.7.7** | 2026-06-10 | Time-scale awareness — task timestamps + decision expiry + idle detection |
 | **1.7.6** | 2026-06-10 | English adaptation — bilingual README + language auto-detect + starter prompts |
 | **1.7.5** | 2026-06-09 | Skill exit protocol + Return-to-task format rule |
 | **1.7.4** | 2026-06-09 | Mandatory format for drift → task return |
