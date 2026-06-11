@@ -6,6 +6,12 @@ A Chinese-English bilingual AI workflow system for **Claude Code** and **Codex C
 
 ---
 
+## 🚪 New Here? Start Here.
+
+**You don't need to understand how this system works.** Just say what you want to do. The AI will guide you step by step — no jargon, no technical background required.
+
+---
+
 ## ✨ Core Features
 
 ### 🔄 Session Recovery (v1.5.0+, enhanced through v1.7.x)
@@ -55,7 +61,7 @@ You change system → Close window → Hook auto commit + push
 - **Four-question self-check** — Before every change: logical? conflicts? important? right timing?
 - **Time-scale awareness** — Tasks track created/last-active timestamps; stale decisions flagged for re-confirmation
 
-**CLAUDE.md Rules (v1.6.2 ~ v1.8.2):**
+**CLAUDE.md Rules (v1.6.2 ~ v1.9.0):**
 - **Verify by doing** — Run commands, don't guess from docs
 - **Tone standards** — Patient, equal, explain everything; no dismissive one-liners
 - **Task closeout rule** — Never close a task without user confirmation
@@ -131,6 +137,7 @@ After installation, try one of these:
 
 | Version | Date | Highlights |
 |---------|------|-----------|
+| **1.9.0** | 2026-06-11 | Beginner mode — newbie entry + jargon filter + beginner channel |
 | **1.8.2** | 2026-06-11 | Output self-check + write-level gate — prevent dev content leaking into workflow |
 | **1.8.1** | 2026-06-11 | System health check + auto-cleanup — integrity scan on every session start |
 | **1.8.0** | 2026-06-11 | Multi-window session management — .resume/ per-window files prevent conflicts |
