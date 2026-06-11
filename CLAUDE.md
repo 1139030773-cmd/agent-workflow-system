@@ -2,12 +2,41 @@
 
 ## 启动恢复检查
 
-**只有以下情况才读 RESUME.md 走恢复流程：**
+**只有以下情况才扫描 `.resume/` 走恢复流程：**
 
 | 用户第一句话 | 行为 |
 |-------------|------|
-| "继续" / "接着" / "上次" / "恢复" | 读 RESUME.md → 按 5 字段格式展示任务 → 问「接下来想怎么做？」 |
+| "继续" / "接着" / "上次" / "恢复" | 扫描 `.resume/` 目录 → 按活跃 session 数量处理（见下方） |
 | 沉默 / 明确新任务 | 跳过，不打扰 |
+
+### 多 session 选择逻辑
+
+```
+扫描 .resume/ 下所有 session-*.md 文件，过滤 status=active
+
+0 个活跃 session → fallback 读根目录 RESUME.md（向后兼容）
+1 个活跃 session → 直接按 5 字段格式展示，问「接下来想怎么做？」
+≥2 个活跃 session → 列出编号让用户选：
+  | # | 任务 | 阶段 | 最后活跃 |
+  |---|------|------|----------|
+  | ① | {task_name} | {phase} | {last_updated} |
+  | ② | {task_name} | {phase} | {last_updated} |
+  回复 1/2 选择，或者说"新任务"跳过
+```
+
+用户选定后再按 5 字段格式展示，问「接下来想怎么做？」
+
+### Session 文件格式
+
+文件路径：`.resume/session-YYYYMMDD-HHmmss.md`（时间戳 = 收尾时刻）
+
+每个文件结构与根目录 RESUME.md 一致，额外包含 `session_id` 字段。
+
+### 收尾写文件规则
+
+收尾时写两个位置：
+1. `.resume/{session-id}.md` — 该窗口专属 checkpoint（主）
+2. 根目录 `RESUME.md` — 向后兼容 fallback（副，只保留最新一个任务的信息）
 
 ## 版本更新检查
 
@@ -38,7 +67,7 @@
 | 1 | **三目录同步** | ① 根目录 `c:\Users\11390\Documents\New project\`（CHANGELOG/README.md/README_CN.md/CLAUDE.md）② `plugins/agent-workflow-system/`（插件 CLAUDE.md 规则）③ `plugins/plugins/agent-workflow-system/`（plugin.json/skills） |
 | 2 | **CHANGELOG** | 在对应版本条目下记录改动（Added/Changed/Fixed），**版本号必须与步骤 5 的 plugin.json 一致** |
 | 3 | **README** | 如果改动影响功能描述，同步更新 README.md + README_CN.md 两份文件 |
-| 4 | **RESUME.md** | 如果改动涉及任务状态变更，同步更新 checkpoint（last_updated / completed / next_step / phase） |
+| 4 | **RESUME.md + .resume/** | 如果改动涉及任务状态变更，同步更新 `.resume/{session-id}.md` + 根目录 RESUME.md（last_updated / completed / next_step / phase） |
 | 5 | **版本号** | 如果是新功能/breaking change，同步更新 `plugin.json` + `marketplace.json` 版本，**版本号必须与步骤 2 的 CHANGELOG 一致** |
 | 6 | **commit + push** | 在 `plugins/` 仓库提交推送；新功能/breaking change 需打版本 tag |
 | 7 | **版本一致性验证** | 运行 `.\validate-version.ps1`，通过（显示 ✅）才算完成。不通过 → 回去补步骤 2 或 5，不准跳过 |

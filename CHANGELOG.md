@@ -2,6 +2,17 @@
 
 所有对该项目的重大更改将在此文件中进行记录。
 
+## [1.8.0] - 2026-06-11
+
+### Added
+- 📂 **多窗口 Session 管理** — `.resume/` 目录存放每个窗口独立的 session 文件，避免多窗口并行时互相覆盖
+- 🔀 **"继续"多任务选择** — 多个活跃 session 时列出编号让用户选，单 session 直接展示，零 session fallback 到 RESUME.md
+- 📝 **phase-closeout 增强** — 收尾时写 `.resume/{session-id}.md` + 根目录 RESUME.md 双位置
+
+### Changed
+- 🔧 **CLAUDE.md 启动恢复** — 从读单一 RESUME.md 改为扫描 `.resume/` 目录
+- 🔧 **系统改动铁律步骤 4** — 从只更新 RESUME.md 扩展为 RESUME.md + .resume/ 双位置
+
 ## [1.7.7] - 2026-06-10
 
 ### Added
