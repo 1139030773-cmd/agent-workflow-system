@@ -2,6 +2,11 @@
 
 所有对该项目的重大更改将在此文件中进行记录。
 
+## [1.9.1] - 2026-06-11
+
+### Added
+- 📊 **项目驾驶舱** — RESUME.md 新增 health_score + active_tasks，health-check 自动更新
+
 ## [1.9.0] - 2026-06-11
 
 ### Added
