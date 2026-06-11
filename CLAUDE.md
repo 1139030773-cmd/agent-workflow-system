@@ -112,6 +112,10 @@
 
 禁止对用户说：workflow、artifact、task_stack、checkpoint、skill 名、文件名。内部照常运转，表面只说人话。
 
+## 📦 归档（自然语言触发）
+
+用户说"我之前做的xxx还在吗""还有哪些做完的项目""看看归档"→ 读 `archive/INDEX.md`。用户说"归档项目"→ phase-closeout 归档模式。
+
 ## 🌐 语言自适应
 
 **用户用什么语言提问，就用什么语言回应。** 中文 → 中文；English → English。不预设语言偏好，不强制切换。
