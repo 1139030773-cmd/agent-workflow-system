@@ -14,7 +14,7 @@ A Chinese-English bilingual AI workflow system for **Claude Code** and **Codex C
 
 ## ✨ Core Features
 
-### 🔄 Session Recovery (v1.5.0+, enhanced through v1.7.x)
+### 🔄 Session Recovery (v1.5.0+)
 
 **Close the window, the task survives. New window, same AI.**
 
