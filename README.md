@@ -68,7 +68,7 @@ You change system → Close window → Hook auto commit + push
 | Skill | Role | When |
 |------|------|------|
 | `workflow-system` | Orchestrator | Entry routing to the right sub-skill |
-| `newbie-guide` | Guide | Vague goal → actionable task (Socratic questioning) |
+| `newbie-guide` | Guide | Vague goal → actionable task (Socratic questioning + optional background research) |
 | `project-master` | Planner | Task breakdown, decision gates, acceptance criteria |
 | `debug-fixer` | Executor | Errors / test failures / bugs (TDD minimal fix) |
 | `learning-coach` | Executor | Learning programming, design, languages, etc. |
