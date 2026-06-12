@@ -88,7 +88,7 @@ You change system → Close window → Hook auto commit + push
 - **Four-question self-check** — Before every change: logical? conflicts? important? right timing?
 - **Time-scale awareness** — Tasks track created/last-active timestamps; stale decisions flagged for re-confirmation
 
-**CLAUDE.md Rules (v1.6.2 ~ v1.11.0):**
+**CLAUDE.md Rules (v1.6.2 ~ v1.11.1):**
 - **Verify by doing** — Run commands, don't guess from docs
 - **Tone standards** — Patient, equal, explain everything; no dismissive one-liners
 - **Task closeout rule** — Never close a task without user confirmation
@@ -164,6 +164,7 @@ After installation, try one of these:
 
 | Version | Date | Highlights |
 |---------|------|-----------|
+| **1.11.1** | 2026-06-12 | health-check.ps1 encoding fix — 3 bugs, 100% health |
 | **1.11.0** | 2026-06-12 | PROJECT.md — one-screen overview, auto-updated per phase |
 | **1.10.3** | 2026-06-11 | Removed write-level gate — classification interference |
 | **1.10.2** | 2026-06-11 | Full distribution — scripts + hooks included in plugin package |
