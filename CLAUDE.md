@@ -6,6 +6,7 @@
 | 2 | **话题变了吗** | 变了 → 必须先话题标定再回复 |
 | 3 | **要写文件吗** | 写了什么文件？层面匹配吗？（工作流文件 ≠ 开发内容） |
 | 4 | **重复建设？** | completed 里有没有已经做过类似的事？ |
+| 5 | **有依据吗？** | 关于系统的设计判断 → 必须有源文件引用。纯推理不允许，先去读再回来说 |
 
 ## 启动恢复检查
 
@@ -82,21 +83,24 @@
 
 ## 系统改动铁律
 
-**只要改了系统文件，以下 7 步必须一口气做完，不等用户催：**
+**只要改了系统文件，以下 8 步必须一口气做完，不等用户催：**
 
 | # | 步骤 | 说明 |
 |---|------|------|
-| 1 | **三目录同步** | ① 根目录 `c:\Users\11390\Documents\New project\`（CHANGELOG/README.md/README_CN.md/CLAUDE.md）② `plugins/agent-workflow-system/`（插件 CLAUDE.md 规则）③ `plugins/plugins/agent-workflow-system/`（plugin.json/skills） |
+| 1 | **四目录同步** | ① 根目录 `c:\Users\11390\Documents\New project\`（CHANGELOG/README.md/README_CN.md/CLAUDE.md）② `plugins/agent-workflow-system/`（插件 CLAUDE.md 规则）③ `plugins/plugins/agent-workflow-system/`（plugin.json/skills）④ `agent-workflow-system-local/`（GitHub 展示用 README/CHANGELOG/CLAUDE.md — 用户看到的页面来自这个仓库） |
 | 2 | **CHANGELOG** | 在对应版本条目下记录改动（Added/Changed/Fixed），**版本号必须与步骤 5 的 plugin.json 一致** |
 | 3 | **README** | 如果改动影响功能描述，同步更新 README.md + README_CN.md 两份文件 |
 | 4 | **RESUME.md + .resume/** | 如果改动涉及任务状态变更，同步更新 `.resume/{session-id}.md` + 根目录 RESUME.md（last_updated / completed / next_step / phase） |
 | 5 | **版本号** | 如果是新功能/breaking change，同步更新 `plugin.json` + `marketplace.json` 版本，**版本号必须与步骤 2 的 CHANGELOG 一致** |
-| 6 | **commit + push + release** | 在 `plugins/` 和 `agent-workflow-system` 仓库提交推送；打版本 tag；`gh release create` 创建 GitHub Release |
-| 7 | **版本一致性验证** | 运行 `scripts/validate-version.ps1`（或 `.sh`），通过（显示 ✅）才算完成。不通过 → 回去补步骤 2 或 5，不准跳过 |
+| 6 | **对抗验证** | spawn 独立 agent，读取本次改动的所有文件，**专门找"应该改但没改"的遗漏**（四目录是否都覆盖了？CHANGELOG 写了但 README 漏了？版本号改了但 marketplace.json 没改？）。发现遗漏 → 回去补，不准跳过。无遗漏 → 继续 |
+| 7 | **commit + push + release** | 在 `plugins/` 和 `agent-workflow-system` 仓库提交推送；打版本 tag；`gh release create` 创建 GitHub Release（`--latest` 标记最新版本） |
+| 8 | **版本一致性验证** | 运行 `scripts/validate-version.ps1`（或 `.sh`），通过（显示 ✅）才算完成。不通过 → 回去补步骤 2 或 5，不准跳过 |
 
 > **步骤 2 和 5 互相交叉引用**：改 CHANGELOG 时想着 plugin.json，改 plugin.json 时想着 CHANGELOG。两个版本号互为锚点，忘了一个会自相矛盾。
 
-> **步骤 7 是硬卡点**：不读文件、不跑 `git tag` 确认 = 没改完。AI 不能凭"我记得改过了"跳过这步。
+> **步骤 6 是语义验证，步骤 8 是机械验证**：步骤 6 用独立视角找"该改没改"的遗漏（AI 容易自我确认，独立 agent 打破盲区）。步骤 8 用脚本验证版本号一致性。两个都过才算完。
+
+> **步骤 8 是硬卡点**：不读文件、不跑 `git tag` 确认 = 没改完。AI 不能凭"我记得改过了"跳过这步。
 
 **违反信号**: 用户问"README 更新了吗"、"CHANGELOG 补了吗"、"推送了吗"、"Release 呢" = 你漏步骤了。
 
